@@ -1,0 +1,66 @@
+# nfpm example config file
+#
+# check https://nfpm.goreleaser.com/configuration for detailed usage
+#
+name: "stenographer"
+arch: "amd64"
+platform: "linux"
+version: "v1.0.1"
+section: "default"
+priority: "extra"
+replaces:
+- stenographer
+provides:
+- stenographer
+recommends:
+- tcpdump
+- jq
+suggests:
+- tshark
+maintainer: "QXIP BV <bot@qxip.net>"
+description: |
+  Stenographer is a full-packet-capture utility for buffering packets 
+  to disk for intrusion detection and incident response purposes.
+vendor: "qxip"
+homepage: "http://github.com/qxip/stenographer"
+license: "Apache2"
+empty_folders:
+- /opt/stenographer
+- /opt/stenographer/configs
+contents:
+- src: ./stenocurl
+  dst: /usr/bin/stenocurl
+  file_info:
+    mode: 0755
+- src: ./stenoread
+  dst: /usr/bin/stenoread
+  file_info:
+    mode: 0755
+- src: ./stenokeys.sh
+  dst: /opt/stenographer/stenokeys.sh
+  file_info:
+    mode: 0755
+- src: ./stenographer
+  dst: /usr/bin/stenographer
+  file_info:
+    mode: 0700
+    owner: stenographer
+    group: root
+- src: ./stenotype/stenotype
+  dst: /usr/bin/stenotype
+  file_info:
+    mode: 0500
+    owner: stenographer
+    group: root
+- src: ./configs/*
+  dst: /opt/stenographer/configs
+overrides:
+  rpm:
+    scripts:
+#      preinstall: ./scripts/preinstall.sh
+      postinstall: ./scripts/postinstall.sh
+#      postremove: ./scripts/postremove.sh
+  deb:
+    scripts:
+      postinstall: ./scripts/postinstall.sh
+#      preremove: ./scripts/preremove.sh

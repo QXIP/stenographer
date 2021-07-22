@@ -113,6 +113,14 @@ other Linux distros):
 *   libseccomp-dev
 *   libpcap-dev
 
+Packaging
+---------
+
+To package a stenographer as deb/rpm/apk use the included [nfpm config](https://nfpm.goreleaser.com/) template:
+
+    $ nfpm pkg --packager deb --target /tmp/
+    $ nfpm pkg --packager rpm --target /tmp/
+
 
 Obligatory Fine Print
 ---------------------

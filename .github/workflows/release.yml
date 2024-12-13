@@ -43,18 +43,18 @@ jobs:
         echo "VERSION=${{ (github.ref_name == 'master' && github.event_name == 'workflow_dispatch') && github.event.inputs.ref_name || github.ref_name }}" >> $GITHUB_ENV
 
     - name: Create deb package
-      uses: burningalchemist/action-gh-nfpm@v1
-      id: deb-package
+      id: nfpm-deb
+      uses: burningalchemist/nfpm-action@v1
       with:
-        config: "nfpm.yaml"
-        packager: "deb"
-        
+          packager: deb
+          config: nfpm.yml
+          
     - name: Create rpm package
-      uses: burningalchemist/action-gh-nfpm@v1
-      id: rpm-package
+      id: nfpm-rpm
+      uses: burningalchemist/nfpm-action@v1
       with:
-        config: "nfpm.yaml"
-        packager: "rpm"
+          packager: rpm
+          config: nfpm.yml
         
     - name: Upload release
       uses: boxpositron/upload-multiple-releases@1.0.7
@@ -64,8 +64,8 @@ jobs:
         release_config: |
             stenographer
             stenoread
-            *.deb
-            *.rpm
+            stenographer*.deb
+            stenographer*.rpm
         tag_name: ${{ env.VERSION }}
         release_name: ${{ env.VERSION }}
         draft: false

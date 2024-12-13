@@ -20,48 +20,32 @@ description: |
 vendor: "qxip"
 homepage: "http://github.com/qxip/stenographer"
 license: "Apache2"
-
-# Updated contents block using new format
-contents:
-  - src: ./stenocurl
-    dst: /usr/bin/stenocurl
-    file_info:
-      mode: 0755
-
-  - src: ./stenoread
-    dst: /usr/bin/stenoread
-    file_info:
-      mode: 0755
-
-  - src: ./stenokeys.sh
-    dst: /opt/stenographer/stenokeys.sh
-    file_info:
-      mode: 0755
-
-  - src: ./stenographer
-    dst: /usr/bin/stenographer
-    file_info:
-      mode: 0700
-      owner: stenographer
-      group: root
-
-  - src: ./stenotype/stenotype
-    dst: /usr/bin/stenotype
-    file_info:
-      mode: 0500
-      owner: stenographer
-      group: root
-
-  # Config files
-  - dst: /opt/stenographer
-    type: dir
-
-  - dst: /opt/stenographer/configs
-    type: dir
-
-  - src: ./configs/*
-    dst: /opt/stenographer/configs/
-
+empty_folders:
+  - /opt/stenographer
+  - /opt/stenographer/configs
+files:
+  /usr/bin/stenocurl:
+    file: ./stenocurl
+    mode: 0755
+  /usr/bin/stenoread:
+    file: ./stenoread
+    mode: 0755
+  /usr/bin/stenographer:
+    file: ./stenographer
+    mode: 0700
+    owner: stenographer
+    group: root
+  /usr/bin/stenotype:
+    file: ./stenotype/stenotype
+    mode: 0500
+    owner: stenographer
+    group: root
+  /opt/stenographer/stenokeys.sh:
+    file: ./stenokeys.sh
+    mode: 0755
+config_files:
+  /opt/stenographer/configs:
+    file: ./configs/*
 overrides:
   rpm:
     scripts:

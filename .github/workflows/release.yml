@@ -43,14 +43,14 @@ jobs:
         echo "VERSION=${{ (github.ref_name == 'master' && github.event_name == 'workflow_dispatch') && github.event.inputs.ref_name || github.ref_name }}" >> $GITHUB_ENV
 
     - name: Create deb package
-      uses: skynet-core/nfpm@v1.5
+      uses: burningalchemist/action-gh-nfpm@v1
       id: deb-package
       with:
         config: "nfpm.yaml"
         packager: "deb"
         
     - name: Create rpm package
-      uses: skynet-core/nfpm@v1.5
+      uses: burningalchemist/action-gh-nfpm@v1
       id: rpm-package
       with:
         config: "nfpm.yaml"

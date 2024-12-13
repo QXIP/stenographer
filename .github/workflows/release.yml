@@ -42,20 +42,21 @@ jobs:
     - run: |
         echo "VERSION=${{ (github.ref_name == 'master' && github.event_name == 'workflow_dispatch') && github.event.inputs.ref_name || github.ref_name }}" >> $GITHUB_ENV
 
-    - name: Create deb package
-      id: nfpm-deb
-      uses: burningalchemist/nfpm-action@v1
-      with:
-          packager: deb
-          config: nfpm.yaml
-          
-    - name: Create rpm package
-      id: nfpm-rpm
-      uses: burningalchemist/nfpm-action@v1
-      with:
-          packager: rpm
-          config: nfpm.yaml
-        
+    - name: get NFPM
+      run: |
+          wget -qO- https://github.com/goreleaser/nfpm/releases/download/v2.35.3/nfpm_2.35.3_Linux_x86_64.tar.gz | tar --directory /app/ -xz nfpm
+          chmod +x /app/nfpm
+
+    - name: Create Packages
+      env:
+          VERSION: ${{ env.VERSION }}
+          PACKAGE: "stenographer"
+          RELEASE: ${{ env.VERSION }}
+          ARCH: "amd64"
+      run: |
+          /app/nfpm pkg --config nfpm.yaml --target "./$PACKAGE-$RELEASE-$ARCH.deb"
+          /app/nfpm pkg --config nfpm.yaml --target "./$PACKAGE-$RELEASE-$ARCH.rpm"
+
     - name: Upload release
       uses: boxpositron/upload-multiple-releases@1.0.7
       env:

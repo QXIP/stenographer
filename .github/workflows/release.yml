@@ -47,14 +47,14 @@ jobs:
       uses: burningalchemist/nfpm-action@v1
       with:
           packager: deb
-          config: nfpm.yml
+          config: nfpm.yaml
           
     - name: Create rpm package
       id: nfpm-rpm
       uses: burningalchemist/nfpm-action@v1
       with:
           packager: rpm
-          config: nfpm.yml
+          config: nfpm.yaml
         
     - name: Upload release
       uses: boxpositron/upload-multiple-releases@1.0.7

@@ -63,6 +63,7 @@ jobs:
           RELEASE: ${{ env.VERSION }}
           ARCH: "amd64"
       run: |
+          sed -i 's|v1.0.1|${{ env.VERSION }}|g' nfpm.yaml
           ./nfpm pkg --config nfpm.yaml --target "./$PACKAGE-$RELEASE-$ARCH.deb"
           ./nfpm pkg --config nfpm.yaml --target "./$PACKAGE-$RELEASE-$ARCH.rpm"
 

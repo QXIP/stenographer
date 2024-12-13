@@ -6,6 +6,9 @@ on:
       ref_name:
         description: Release Version
         required: true
+      test:
+        required: true
+        type: boolean
   release:
     types: [created]
 
@@ -37,6 +40,7 @@ jobs:
         go test ./...
         
     - name: Integration Test
+      if: ${{ github.event.inputs.test }}
       run: bash integration_test/test.sh
       
     - run: |
@@ -44,7 +48,7 @@ jobs:
 
     - name: get NFPM
       run: |
-          wget -qO- https://github.com/goreleaser/nfpm/releases/download/v2.35.3/nfpm_2.35.3_Linux_x86_64.tar.gz | tar --directory ./ -xz nfpm
+          wget -qO- https://github.com/goreleaser/nfpm/releases/download/v2.41.1/nfpm_2.41.1_Linux_x86_64.tar.gz | tar --directory ./ -xz nfpm
           chmod +x nfpm
 
     - name: Create Packages

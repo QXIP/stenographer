@@ -59,7 +59,7 @@ contents:
   - dst: /opt/stenographer/configs
     type: dir
 
-   - src: ./configs/*
+  - src: ./configs/*
     dst: /opt/stenographer/configs/
 
 overrides:

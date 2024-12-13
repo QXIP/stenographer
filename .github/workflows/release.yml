@@ -41,7 +41,21 @@ jobs:
       
     - run: |
         echo "VERSION=${{ (github.ref_name == 'master' && github.event_name == 'workflow_dispatch') && github.event.inputs.ref_name || github.ref_name }}" >> $GITHUB_ENV
-    
+
+    - name: Create deb package
+      uses: skynet-core/nfpm@v1.5
+      id: deb-package
+      with:
+        config: "nfpm.yaml"
+        packager: "deb"
+        
+    - name: Create rpm package
+      uses: skynet-core/nfpm@v1.5
+      id: rpm-package
+      with:
+        config: "nfpm.yaml"
+        packager: "rpm"
+        
     - name: Upload release
       uses: boxpositron/upload-multiple-releases@1.0.7
       env:
@@ -50,6 +64,8 @@ jobs:
         release_config: |
             stenographer
             stenoread
+            *.deb
+            *.rpm
         tag_name: ${{ env.VERSION }}
         release_name: ${{ env.VERSION }}
         draft: false
